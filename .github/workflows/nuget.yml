@@ -2,6 +2,11 @@ name: Deploy to Nuget
 
 on: ["push"]
 
+env:
+  PROJECT_PATH: 'mcs-project/mcs-project.csproj'
+  PACKAGE_OUTPUT: ${{ github.workspace }}\output
+  NUGET_SOURCE_URL: 'https://api.nuget.org/v3/index.json' 
+
   jobs:
     deploy:
       name: deploy
@@ -18,4 +23,16 @@ on: ["push"]
 
       
       - name: 'Restore Packages'
-        run: dotnet restore 
+        run: dotnet restore ${{ env.PROJECT_PATH }}
+
+      - name: 'Restore Packages'
+        run: dotnet build ${{ env.PROJECT_PATH }} --no-restore --configuration Release
+
+      - name: 'Pack Project'
+        run: dotnet pack ${{ env.PROJECT_PATH }} --no-restore --no-build --configuration Release --include-symbols --output 
+
+      - name: 'Push Project'
+        run: dotnet nuget push ${{ env.PACKAGE_OUTPUT }}\*.nupkg -k ${{ secrets.GIT_ACCESS_TOKEN }} -s ${{ NUGET_SOURCE_URL }} 
+
+      
+      
