@@ -35,7 +35,7 @@ jobs:
         run: dotnet new console --name OctocatApp
       # Pack
       - name: 'Package the project'
-        run: dotnet pack --configuration Release
+        run: dotnet pack OctocatApp --configuration Release
       #Publish the package 
       - name: 'Push Project'
         run: dotnet nuget push "bin/Release/OctocatApp.1.0.0.nupkg" --api-key secrets.GIT_ACCESS_TOKEN -s "github"
