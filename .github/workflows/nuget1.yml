@@ -25,6 +25,10 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
       
+      # Set TLS
+      - name: Set TLS
+        run: ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+      
       # Runs a single command using the runners shell
       - name: Install dot net
         uses: actions/setup-dotnet@v1
