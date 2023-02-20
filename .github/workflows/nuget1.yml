@@ -32,7 +32,7 @@ jobs:
       
       # Remove source
       - name: Remove source
-        run: dotnet nuget remove source
+        run: dotnet nuget remove github
       
       # Source List
       - name: List source
