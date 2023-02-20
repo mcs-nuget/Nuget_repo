@@ -30,13 +30,17 @@ jobs:
         with:
           dotnet-version: '3.1.x'
       
+      # Remove source
+      - name: Remove source
+        run: dotnet nuget remove source
+      
       # Source List
       - name: List source
         run: dotnet nuget list source
       
-      # Add source
-      #- name: Add source
-      #  run: dotnet nuget add source --username mohanaa92 --password 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 --store-password-in-clear-text --name github "https://nuget.pkg.github.com/mcs-nuget/index.json"  
+      Add source
+      - name: Add source
+        run: dotnet nuget add source --username mohanaa92 --password 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 --store-password-in-clear-text --name github "https://nuget.pkg.github.com/mcs-nuget/index.json"  
       
       # Create new Project
       - name: Create Project
