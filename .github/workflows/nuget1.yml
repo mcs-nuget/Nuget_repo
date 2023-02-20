@@ -27,7 +27,7 @@ jobs:
       
       # Set TLS
       - name: Set TLS
-        run: ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+        run: [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
       
       # Runs a single command using the runners shell
       - name: Install dot net
