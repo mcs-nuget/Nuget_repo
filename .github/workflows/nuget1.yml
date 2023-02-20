@@ -26,7 +26,7 @@ jobs:
       
       # Add source
       - name: Add source
-        run: dotnet nuget add source --username USERNAME --password ${{ secrets.GIT_ACCESS_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/mcs-nuget/index.json"  
+        run: dotnet nuget add source --username mohanaa92 --password ${{ secrets.GIT_ACCESS_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/mcs-nuget/index.json"  
 
       # Runs a single command using the runners shell
       - name: Install dot net
