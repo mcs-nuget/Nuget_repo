@@ -24,16 +24,17 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
       
-      # Add source
-      - name: Add source
-        run: dotnet nuget add source --username mohanaa92 --password ${{ secrets.GIT_ACCESS_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/mcs-nuget/index.json"  
-
       # Runs a single command using the runners shell
       - name: Install dot net
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: '3.1.x'
-          
+      
+      # Add source
+      - name: Add source
+        run: dotnet nuget add source --username mohanaa92 --password ${{ secrets.GIT_ACCESS_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/mcs-nuget/index.json"  
+
+      
       # Create new Project
       - name: Create Project
         run: dotnet new console --name OctocatApp
