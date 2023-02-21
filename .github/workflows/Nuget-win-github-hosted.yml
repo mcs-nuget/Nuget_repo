@@ -1,0 +1,58 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Nuget-win-github-hosted
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "deploy"
+  deploy:
+    # The type of runner that the job will run on
+    runs-on: windows-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+      
+      # Set TLS
+      - name: Set TLS
+        run: "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12"
+      
+			# Install Dotnet
+      - name: Install dot net
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '3.1.x'
+					
+			# Remove source
+      - name: Remove source
+        run: dotnet nuget remove source github
+      
+      # Source List
+      - name: List source
+        run: dotnet nuget list source
+      
+      # Add source
+      - name: Add source
+        run: dotnet nuget add source --username mohanaa92 --password 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 --store-password-in-clear-text --name github "https://nuget.pkg.github.com/mcs-nuget/index.json"  
+      
+      # Create new Project
+      - name: Create Project
+        run: dotnet new console --name OctocatApp
+      # Pack
+      - name: 'Package the project'
+        run: dotnet pack OctocatApp --configuration Release
+				
+      # Publish the package 
+      - name: 'Push Project'
+        run: dotnet nuget push 'D:\a\Nuget_repo\Nuget_repo\OctocatApp\bin\Release\OctocatApp.1.0.0.nupkg' --api-key ${{ secrets.GIT_ACCESS_TOKEN }} -s "github"
