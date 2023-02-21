@@ -44,7 +44,7 @@ jobs:
       
       # Add source
       - name: Add source
-        run: dotnet nuget add source --username mohanaa92 --password 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 --store-password-in-clear-text --name github "https://nuget.pkg.github.com/mcs-nuget/index.json"  
+        run: dotnet nuget add source --username mohanaa92 --password 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 --store-password-in-clear-text --name github "https://nuget.pkg.github.com/mcs-nuget/index.json"  
       
       # Create new Project
       - name: Create Project
