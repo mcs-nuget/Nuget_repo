@@ -23,25 +23,20 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
-      
       # Set TLS
       - name: Set TLS
         run: "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12"
-      
       # Install Dotnet
       - name: Install dot net
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: '3.1.x'
-					
+          dotnet-version: '3.1.x'			
       # Remove source
       - name: Remove source
         run: dotnet nuget remove source github
-      
       # Source List
       - name: List source
         run: dotnet nuget list source
-      
       # Add source
       - name: Add source
         run: dotnet nuget add source --username mohanaa92 --password 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 --store-password-in-clear-text --name github "https://nuget.pkg.github.com/mcs-nuget/index.json"  
@@ -52,7 +47,6 @@ jobs:
       # Pack
       - name: 'Package the project'
         run: dotnet pack OctocatApp --configuration Release
-				
       # Publish the package 
       - name: 'Push Project'
         run: dotnet nuget push 'D:\a\Nuget_repo\Nuget_repo\OctocatApp\bin\Release\OctocatApp.1.0.0.nupkg' --api-key ${{ secrets.GIT_ACCESS_TOKEN }} -s "github"
